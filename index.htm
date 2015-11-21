@@ -1,0 +1,37 @@
+
+<!Doctype html><html xmlns=http://www.w3.org/1999/xhtml><head>
+    </head>
+<body>
+{{if eq .Title ""}}
+
+<form method="get" id="f">
+    <input type="submit"/><button type="button" onclick="addOption()">add option</button>
+   <li> Title:<input name="title"/></li>
+    <li>  opt1:<input name="opt1"></li>
+
+</form>
+
+<script>
+var i = 1
+    function addOption(){
+    i++
+    document.getElementById("f").insertAdjacentHTML("beforeEnd","<li>  opt"+i+":<input name='opt"+i+"'></li>")
+    }
+</script>
+
+{{else}}
+<H1>{{.Title}}</H1>
+<form method="get">
+<h2>   voter: <input name="voter"/></h2>
+{{range $k,$v := .OptNameList}}
+<li>
+    <input name="optname" value="{{$v}}" type="submit">
+    </li>
+{{end}}
+    </form>
+<p>
+{{.DetailStr}}
+    </p>
+{{end}}
+</body>
+</html>
