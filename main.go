@@ -16,6 +16,7 @@ type MyData struct {
 	OptCount    []int
 	Detail      [][]string
 	DetailStr   template.HTML
+	DetailItem  template.HTML
 }
 
 var data MyData
@@ -34,7 +35,7 @@ func main() {
 }
 
 func JHandle(w http.ResponseWriter, r *http.Request) {
-	tplt, err := template.ParseFiles("index.htm")
+	tplt, err :=  template.ParseFiles("index.htm")
 	checkErr(err)
 	r.ParseForm()
 	if data.Title == "" || len(data.OptNameList) <= 0 {
@@ -70,28 +71,31 @@ func JHandle(w http.ResponseWriter, r *http.Request) {
 			recordVoter(idx, voter,r)
 		}
 
-	}
+	} 
 	DetailUpt()
+	//fmt.Println(data.sDetailItem)
 	err = tplt.Execute(w, data)
 }
 
-func DetailUpt() {
-	str := "Result:"
-	str+="<p>"
+func DetailUpt(){
+	str := "==========================="
+	str+="<p class='setResult'>"
+	sItemInfo := " "
 	for idx,voterList:= range data.Detail{
-		str+=data.OptNameList[idx]+":"+strconv.Itoa(len(voterList))
+		sItemInfo += "<li><input  name='optname' value='"+data.OptNameList[idx]+"' type='submit'/><div style='text-align:center;padding:5px;'>"+strconv.Itoa(len(voterList)) + "份</div></li>"
 	}
 	str+="</p>"
 	for idx, nameList := range data.Detail {
-		str += "<li>"
+		str += "<div><span style='color:red'>"
 		str += data.OptNameList[idx]
-		str+="<p>"
+		str+="</span><p style='padding-left:10px;'>"
 		for _, name := range nameList {
 			str += name + ","
 		}
 		str+="</p>"
-		str += "</li>"
-	}
+		str += "</div>"
+	}	 
+	data.DetailItem = template.HTML(sItemInfo)
 	data.DetailStr = template.HTML(str)
 }
 
