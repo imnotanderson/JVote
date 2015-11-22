@@ -1,33 +1,132 @@
 
 <!Doctype html><html xmlns=http://www.w3.org/1999/xhtml><head>
+
+
+    <style type="text/css">
+    *{
+        text-align: center;
+    }
+            body{
+                /*background: black;*/
+                color: rgb(41,128,114);
+                 /*style="color:rgb(41,128,114)"*/
+            }
+            input,button{
+                
+                color: rgb(41,128,114);
+                font-size:16px;
+                padding:6px;
+                background: transparent;;
+                border: none;
+                /*color:yellow;*/
+                border: 1px  solid;
+            }
+            .setinput input{
+                border:none;
+                /*color:white;*/
+                border-bottom: 1px solid;
+                outline: none;;
+            }
+            .setHover input:hover,button:hover{
+                cursor: pointer;
+                text-shadow:0 0 20px #aaaaff;
+                box-shadow: 0 0 10px white
+            }
+            .setLi li{
+                float: left;
+                list-style: none;
+                margin-left:15px;
+            }
+            .setResult span{
+                padding:10px;
+                color:pink;
+            }
+            input{
+            min-width: 100px;    
+            }
+            table{
+                margin: auto;
+            }
+    </style>
     </head>
 <body>
 {{if eq .Title ""}}
 
-<form method="get" id="f">
-    <input type="submit"/><button type="button" onclick="addOption()">add option</button>
-   <li> Title:<input name="title"/></li>
-    <li>  opt1:<input name="opt1"></li>
+<form method="get" >
+    <div >
+     
+    <div style="text-align:center">
+        <table>
+        <tr class="setinput">
+            <th>设置标题:</th>
+            <td style="text-align:right">                
+                    <input name="title" style="width:95%"/>
+            </td>
+        </tr>
+        <tr  class="setinput"> 
+            <th>
+                选项列表：</th>
+            <td>
 
+                <div  id="f">                    
+                <li> 选项1:  <input name="opt1"></li>
+                </div>    
+            </td>
+            
+        </tr>
+        <tr>
+            <td colspan="2" class="setHover">
+                
+ <input type="submit" value="确定"/>　<button type="button" onclick="addOption()">增加选项</button>                
+            </td>
+        </tr>
+        </table>
+</div>
+    </div>
+
+ 
 </form>
 
 <script>
 var i = 1
     function addOption(){
     i++
-    document.getElementById("f").insertAdjacentHTML("beforeEnd","<li>  opt"+i+":<input name='opt"+i+"'></li>")
+    document.getElementById("f").insertAdjacentHTML("beforeEnd","<li>  选项"+i+":  <input name='opt"+i+"'></li>")
     }
 </script>
 
 {{else}}
-<H1>{{.Title}}</H1>
-<form method="get">
-<h2>   voter: <input name="voter"/></h2>
-{{range $k,$v := .OptNameList}}
-<li>
-    <input name="optname" value="{{$v}}" type="submit">
-    </li>
-{{end}}
+<H1 >{{.Title}}</H1>
+<form method="get" class="setLi"  style="text-align:left;width:100%">
+<div style="position:relative;text-align:center;marign:0 auto;"> 
+</div>
+<br/>
+<script type="text/javascript">
+        window.onload = function(){
+                var oDiv = document.getElementById("divDealFloat");
+                var olis = oDiv.getElementsByTagName("li");
+                var iAllWidth = 0;
+                for(var i=0; i<olis.length;i++)
+                {
+                        iAllWidth += olis[i].offsetWidth + 15;
+                } 
+                //alert(iAllWidth/2) 
+                if(0 <= (window.innerWidth/2 - iAllWidth/2))
+                {
+                    oDiv.setAttribute("style", "float:left;margin-left:"+(window.innerWidth/2 - iAllWidth/2) + "px");    
+                }                
+        }
+</script>
+<div id="divDealFloat">
+{{.DetailItem}}</div>
+<br/>
+<br/>
+<br/>
+
+<div style="padding:100px 0 0 0;">name: <input name="voter"/></h2></div>
+<h2>  
+<br/>
+<div style="padding:10px;"></div>
     </form>
 <p>
 {{.DetailStr}}
