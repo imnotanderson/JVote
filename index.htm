@@ -48,6 +48,22 @@
                 margin: auto;
             }
     </style>
+    <script type="text/javascript">
+        window.onload = function(){
+                var oDiv = document.getElementById("divDealFloat");
+                var olis = oDiv.getElementsByTagName("li");
+                var iAllWidth = 0;
+                for(var i=0; i<olis.length;i++)
+                {
+                        iAllWidth += olis[i].offsetWidth + 15;
+                } 
+                //alert(iAllWidth/2) 
+                if(0 <= (window.innerWidth/2 - iAllWidth/2))
+                {
+                    oDiv.setAttribute("style", "float:left;margin-left:"+(window.innerWidth/2 - iAllWidth/2) + "px");    
+                }                
+        }
+</script>
     </head>
 <body>
 {{if eq .Title ""}}
@@ -101,22 +117,7 @@ var i = 1
 <div style="position:relative;text-align:center;marign:0 auto;"> 
 </div>
 <br/>
-<script type="text/javascript">
-        window.onload = function(){
-                var oDiv = document.getElementById("divDealFloat");
-                var olis = oDiv.getElementsByTagName("li");
-                var iAllWidth = 0;
-                for(var i=0; i<olis.length;i++)
-                {
-                        iAllWidth += olis[i].offsetWidth + 15;
-                } 
-                //alert(iAllWidth/2) 
-                if(0 <= (window.innerWidth/2 - iAllWidth/2))
-                {
-                    oDiv.setAttribute("style", "float:left;margin-left:"+(window.innerWidth/2 - iAllWidth/2) + "px");    
-                }                
-        }
-</script>
+
 <div id="divDealFloat">
 {{.DetailItem}}</div>
 <br/>
