@@ -1,12 +1,10 @@
 package main
 
 import (
+	"strings"
 	"fmt"
 	"net/http"
-	//	"strconv"
 	"html/template"
-	//	"io/ioutil"
-	//	"os"
 	"strconv"
 )
 
@@ -61,6 +59,8 @@ func JHandle(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		voter := r.Form.Get("voter")
+	voter = strings.Replace(voter,"<","",-1)
+	voter = strings.Replace(voter,">","",-1)
 		if voter == "" {
 			tplt.Execute(w,data)
 			return
@@ -118,6 +118,7 @@ func recordVoter(optIdx int, voter string,r *http.Request) {
 }
 
 func checkOpt(optname ,voter string) (int ,bool){
+	fmt.Println(voter)
 	idx:=-1
 	for i, opt := range data.OptNameList {
 		if opt == optname {
